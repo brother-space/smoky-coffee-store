@@ -1,0 +1,276 @@
+/*
+ * DESIGN PHILOSOPHY: "الفحم والنار" — Dark Artisan Luxury
+ * Movement: Dark Luxury Artisan / Neo-Gothic Craft
+ * Colors: Charcoal #232323 | Aged Copper #C2784F | Soft Cream #F2EFE9
+ * Fonts: Tajawal (headings) | Noto Naskh Arabic (body)
+ * Mood: Premium, mysterious, warm, handcrafted
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand Colors */
+  --color-charcoal: oklch(0.18 0.005 240);
+  --color-charcoal-light: oklch(0.22 0.005 240);
+  --color-charcoal-dark: oklch(0.12 0.005 240);
+  --color-copper: oklch(0.62 0.12 48);
+  --color-copper-light: oklch(0.72 0.10 48);
+  --color-copper-dark: oklch(0.50 0.13 48);
+  --color-cream: oklch(0.96 0.01 80);
+  --color-cream-dark: oklch(0.88 0.015 80);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.18 0.005 240);
+  --foreground: oklch(0.96 0.01 80);
+  --card: oklch(0.22 0.005 240);
+  --card-foreground: oklch(0.96 0.01 80);
+  --popover: oklch(0.22 0.005 240);
+  --popover-foreground: oklch(0.96 0.01 80);
+  --primary: oklch(0.62 0.12 48);
+  --primary-foreground: oklch(0.12 0.005 240);
+  --secondary: oklch(0.25 0.006 240);
+  --secondary-foreground: oklch(0.88 0.015 80);
+  --muted: oklch(0.25 0.006 240);
+  --muted-foreground: oklch(0.65 0.015 80);
+  --accent: oklch(0.62 0.12 48);
+  --accent-foreground: oklch(0.12 0.005 240);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.62 0.12 48);
+  --chart-1: oklch(0.62 0.12 48);
+  --chart-2: oklch(0.72 0.10 48);
+  --chart-3: oklch(0.50 0.13 48);
+  --chart-4: oklch(0.40 0.10 48);
+  --chart-5: oklch(0.30 0.08 48);
+  --sidebar: oklch(0.22 0.005 240);
+  --sidebar-foreground: oklch(0.96 0.01 80);
+  --sidebar-primary: oklch(0.62 0.12 48);
+  --sidebar-primary-foreground: oklch(0.12 0.005 240);
+  --sidebar-accent: oklch(0.25 0.006 240);
+  --sidebar-accent-foreground: oklch(0.96 0.01 80);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.62 0.12 48);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Noto Naskh Arabic', 'Tajawal', serif;
+    direction: rtl;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Tajawal', sans-serif;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* Copper gradient text */
+  .text-copper-gradient {
+    background: linear-gradient(135deg, #C2784F 0%, #E8A87C 50%, #C2784F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Copper shimmer button */
+  .btn-copper {
+    background: linear-gradient(135deg, #C2784F 0%, #D4956A 50%, #C2784F 100%);
+    background-size: 200% 200%;
+    transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(194, 120, 79, 0.3);
+  }
+  .btn-copper:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(194, 120, 79, 0.5);
+  }
+
+  /* Smoke particle animation */
+  @keyframes smokeRise {
+    0% {
+      transform: translateY(0) translateX(0) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-60px) translateX(10px) scale(1.5);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-120px) translateX(-5px) scale(2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes smokeRise2 {
+    0% {
+      transform: translateY(0) translateX(0) scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: translateY(-80px) translateX(-15px) scale(1.8);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateY(-150px) translateX(10px) scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes copperPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes dividerGlow {
+    0%, 100% { opacity: 0.4; box-shadow: 0 0 8px rgba(194, 120, 79, 0.3); }
+    50% { opacity: 1; box-shadow: 0 0 20px rgba(194, 120, 79, 0.7); }
+  }
+
+  .smoke-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,200,200,0.4) 0%, transparent 70%);
+    animation: smokeRise 4s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .smoke-particle:nth-child(2) {
+    animation: smokeRise2 5s ease-out infinite;
+    animation-delay: 1.5s;
+  }
+
+  .smoke-particle:nth-child(3) {
+    animation: smokeRise 6s ease-out infinite;
+    animation-delay: 3s;
+  }
+
+  .copper-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C2784F, transparent);
+    animation: dividerGlow 3s ease-in-out infinite;
+  }
+
+  .card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(194, 120, 79, 0.2);
+  }
+
+  .section-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Grain texture overlay */
+  .grain-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+}
