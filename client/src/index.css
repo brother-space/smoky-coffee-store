@@ -96,6 +96,14 @@
   --sidebar-ring: oklch(0.62 0.12 48);
 }
 
+/* ═══════════════════════════════════════════════
+   GLOBAL STYLES
+   ═══════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -104,6 +112,7 @@
     @apply bg-background text-foreground;
     font-family: 'Noto Naskh Arabic', 'Tajawal', serif;
     direction: rtl;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Tajawal', sans-serif;
@@ -119,9 +128,25 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  /* Copper selection highlight */
+  ::selection {
+    background: rgba(194, 120, 79, 0.35);
+    color: #F2EFE9;
+  }
+  ::-moz-selection {
+    background: rgba(194, 120, 79, 0.35);
+    color: #F2EFE9;
+  }
 }
 
+/* ═══════════════════════════════════════════════
+   COMPONENT STYLES
+   ═══════════════════════════════════════════════ */
+
 @layer components {
+
+  /* ─── Container ─── */
   .container {
     width: 100%;
     margin-left: auto;
@@ -150,28 +175,94 @@
     }
   }
 
-  /* Copper gradient text */
+  /* ─── Scroll Progress Bar ─── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #C2784F, #E8A87C, #C2784F);
+    z-index: 100;
+    transform-origin: right;
+    box-shadow: 0 0 10px rgba(194, 120, 79, 0.6);
+  }
+
+  /* ─── Copper gradient text ─── */
   .text-copper-gradient {
-    background: linear-gradient(135deg, #C2784F 0%, #E8A87C 50%, #C2784F 100%);
+    background: linear-gradient(135deg, #C2784F 0%, #E8A87C 40%, #D4956A 70%, #C2784F 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Copper shimmer button */
+  /* ─── Copper shimmer button ─── */
   .btn-copper {
     background: linear-gradient(135deg, #C2784F 0%, #D4956A 50%, #C2784F 100%);
     background-size: 200% 200%;
     transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 20px rgba(194, 120, 79, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-copper::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255,255,255,0.08) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
   }
   .btn-copper:hover {
     background-position: right center;
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(194, 120, 79, 0.5);
   }
+  .btn-copper:hover::after {
+    transform: translateX(100%);
+  }
+  .btn-copper:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(194, 120, 79, 0.4);
+  }
 
-  /* Smoke particle animation */
+  /* ─── Glassmorphism card ─── */
+  .glass-card {
+    background: rgba(30, 25, 20, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(194, 120, 79, 0.12);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .glass-card:hover {
+    background: rgba(30, 25, 20, 0.8);
+    border-color: rgba(194, 120, 79, 0.3);
+    box-shadow: 0 20px 60px rgba(194, 120, 79, 0.12), 0 0 40px rgba(194, 120, 79, 0.05);
+    transform: translateY(-4px);
+  }
+
+  /* ─── Product card with 3D tilt ─── */
+  .product-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  }
+  .product-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(194, 120, 79, 0.1);
+  }
+
+  /* ═══════════════════════════════════════════════
+     KEYFRAME ANIMATIONS
+     ═══════════════════════════════════════════════ */
+
+  /* Smoke rise */
   @keyframes smokeRise {
     0% {
       transform: translateY(0) translateX(0) scale(1);
@@ -202,6 +293,48 @@
     }
   }
 
+  /* Ember float - tiny glowing particles */
+  @keyframes emberFloat {
+    0% {
+      transform: translateY(0) translateX(0) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      transform: translateY(-100px) translateX(30px) scale(0.8);
+      opacity: 0.8;
+    }
+    80% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-200px) translateX(-20px) scale(0.3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes emberFloat2 {
+    0% {
+      transform: translateY(0) translateX(0) scale(0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    50% {
+      transform: translateY(-130px) translateX(-25px) scale(0.7);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(-250px) translateX(15px) scale(0.2);
+      opacity: 0;
+    }
+  }
+
   @keyframes copperPulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
@@ -222,6 +355,24 @@
     50% { opacity: 1; box-shadow: 0 0 20px rgba(194, 120, 79, 0.7); }
   }
 
+  @keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes whatsappPulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ─── Smoke particle ─── */
   .smoke-particle {
     position: absolute;
     border-radius: 50%;
@@ -240,12 +391,32 @@
     animation-delay: 3s;
   }
 
+  /* ─── Ember particle ─── */
+  .ember-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #C2784F;
+    box-shadow: 0 0 6px 2px rgba(194, 120, 79, 0.6), 0 0 12px 4px rgba(194, 120, 79, 0.3);
+    pointer-events: none;
+    animation: emberFloat 5s ease-out infinite;
+  }
+
+  .ember-particle:nth-child(even) {
+    animation: emberFloat2 6s ease-out infinite;
+    background: #E8A87C;
+    box-shadow: 0 0 6px 2px rgba(232, 168, 124, 0.6), 0 0 12px 4px rgba(232, 168, 124, 0.3);
+  }
+
+  /* ─── Copper divider ─── */
   .copper-divider {
     height: 1px;
     background: linear-gradient(90deg, transparent, #C2784F, transparent);
     animation: dividerGlow 3s ease-in-out infinite;
   }
 
+  /* ─── Card hover ─── */
   .card-hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -254,6 +425,7 @@
     box-shadow: 0 20px 50px rgba(194, 120, 79, 0.2);
   }
 
+  /* ─── Section fade in ─── */
   .section-fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -264,7 +436,61 @@
     transform: translateY(0);
   }
 
-  /* Grain texture overlay */
+  /* ─── WhatsApp floating button ─── */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 90;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    animation: whatsappPulse 2s infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid rgba(194, 120, 79, 0.3);
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+  }
+
+  /* ─── Newsletter input ─── */
+  .newsletter-input {
+    background: rgba(242, 239, 233, 0.06);
+    border: 1px solid rgba(194, 120, 79, 0.25);
+    color: #F2EFE9;
+    border-radius: 9999px;
+    padding: 0.875rem 1.5rem;
+    font-family: 'Tajawal', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  .newsletter-input::placeholder {
+    color: rgba(242, 239, 233, 0.35);
+  }
+  .newsletter-input:focus {
+    border-color: #C2784F;
+    box-shadow: 0 0 0 3px rgba(194, 120, 79, 0.15), 0 0 20px rgba(194, 120, 79, 0.1);
+    background: rgba(242, 239, 233, 0.08);
+  }
+
+  /* ─── Timeline connector line ─── */
+  .timeline-line {
+    position: absolute;
+    right: 23px;
+    top: 56px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(194, 120, 79, 0.4), rgba(194, 120, 79, 0.05));
+  }
+
+  /* ─── Grain texture overlay ─── */
   .grain-overlay::before {
     content: '';
     position: absolute;
@@ -272,5 +498,44 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* ─── Back to top button ─── */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(194, 120, 79, 0.2);
+    border: 1px solid rgba(194, 120, 79, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C2784F;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+  .back-to-top:hover {
+    background: rgba(194, 120, 79, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(194, 120, 79, 0.3);
+  }
+
+  /* ─── Custom scrollbar ─── */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #141210;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(194, 120, 79, 0.3);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(194, 120, 79, 0.5);
   }
 }
